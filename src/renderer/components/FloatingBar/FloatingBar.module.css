@@ -1,0 +1,368 @@
+/* ============================================================
+   FloatingBar — redesigned with dormant state, gradients, glow
+   ============================================================ */
+
+/* Outer wrapper — transparent, gives room for glow/shadow */
+.wrap {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 6px;
+  background: transparent;
+}
+
+/* ---- The capsule ---- */
+.pill {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 22px;
+  cursor: default;
+  user-select: none;
+  overflow: hidden;
+  transition:
+    width 0.32s cubic-bezier(0.34, 1.56, 0.64, 1),
+    height 0.32s cubic-bezier(0.34, 1.56, 0.64, 1),
+    opacity 0.25s ease,
+    background 0.4s ease,
+    border-radius 0.32s ease,
+    box-shadow 0.4s ease,
+    transform 0.32s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* ---- Dormant: small visible pill ---- */
+.pillDormant {
+  width: 52px;
+  height: 28px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, rgba(45, 27, 105, 0.7), rgba(26, 16, 64, 0.7));
+  backdrop-filter: blur(30px) saturate(150%);
+  -webkit-backdrop-filter: blur(30px) saturate(150%);
+  border: 1px solid rgba(124, 110, 240, 0.12);
+  box-shadow:
+    0 2px 10px rgba(0, 0, 0, 0.3),
+    0 0 12px rgba(124, 110, 240, 0.06);
+  opacity: 0.7;
+  transform: translateY(0);
+}
+
+.pillDormant:hover {
+  opacity: 1;
+  box-shadow:
+    0 2px 12px rgba(0, 0, 0, 0.35),
+    0 0 16px rgba(124, 110, 240, 0.12);
+}
+
+/* ---- Idle (expanded on hover) ---- */
+.pillIdle {
+  width: 152px;
+  height: 44px;
+  background: linear-gradient(135deg, rgba(45, 27, 105, 0.92), rgba(26, 16, 64, 0.92));
+  backdrop-filter: blur(40px) saturate(180%);
+  -webkit-backdrop-filter: blur(40px) saturate(180%);
+  border: 1px solid rgba(124, 110, 240, 0.2);
+  box-shadow:
+    0 4px 20px rgba(0, 0, 0, 0.4),
+    0 0 24px rgba(124, 110, 240, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* ---- Recording ---- */
+.pillRecording {
+  width: 224px;
+  height: 44px;
+  background: linear-gradient(135deg, rgba(61, 18, 25, 0.94), rgba(26, 16, 64, 0.94));
+  backdrop-filter: blur(40px) saturate(180%);
+  -webkit-backdrop-filter: blur(40px) saturate(180%);
+  border: 1px solid rgba(255, 59, 48, 0.25);
+  box-shadow:
+    0 4px 20px rgba(0, 0, 0, 0.4),
+    0 0 30px rgba(255, 59, 48, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  transform: translateY(0);
+  opacity: 1;
+  animation: recordGlow 2s ease-in-out infinite;
+}
+
+@keyframes recordGlow {
+  0%, 100% { box-shadow: 0 4px 20px rgba(0,0,0,0.4), 0 0 30px rgba(255,59,48,0.12), inset 0 1px 0 rgba(255,255,255,0.05); }
+  50%      { box-shadow: 0 4px 20px rgba(0,0,0,0.4), 0 0 40px rgba(255,59,48,0.25), inset 0 1px 0 rgba(255,255,255,0.05); }
+}
+
+/* ---- Processing ---- */
+.pillProcessing {
+  width: 180px;
+  height: 44px;
+  background: linear-gradient(135deg, rgba(27, 41, 105, 0.94), rgba(26, 16, 64, 0.94));
+  backdrop-filter: blur(40px) saturate(180%);
+  -webkit-backdrop-filter: blur(40px) saturate(180%);
+  border: 1px solid rgba(94, 92, 230, 0.2);
+  box-shadow:
+    0 4px 20px rgba(0, 0, 0, 0.4),
+    0 0 24px rgba(94, 92, 230, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  transform: translateY(0);
+  opacity: 1;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Shimmer sweep across processing pill */
+.pillProcessing::after {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%; width: 100%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.04), transparent);
+  animation: shimmer 2s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0%   { left: -100%; }
+  100% { left: 200%; }
+}
+
+/* ---- Success ---- */
+.pillSuccess {
+  width: 180px;
+  height: 44px;
+  background: linear-gradient(135deg, rgba(20, 60, 35, 0.94), rgba(26, 16, 64, 0.94));
+  backdrop-filter: blur(40px) saturate(180%);
+  -webkit-backdrop-filter: blur(40px) saturate(180%);
+  border: 1px solid rgba(52, 199, 89, 0.25);
+  box-shadow:
+    0 4px 20px rgba(0, 0, 0, 0.4),
+    0 0 24px rgba(52, 199, 89, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* ---- Error ---- */
+.pillError {
+  width: 180px;
+  height: 44px;
+  background: linear-gradient(135deg, rgba(61, 18, 25, 0.94), rgba(40, 12, 12, 0.94));
+  backdrop-filter: blur(40px) saturate(180%);
+  -webkit-backdrop-filter: blur(40px) saturate(180%);
+  border: 1px solid rgba(255, 69, 58, 0.3);
+  box-shadow:
+    0 4px 20px rgba(0, 0, 0, 0.4),
+    0 0 24px rgba(255, 69, 58, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  transform: translateY(0);
+  opacity: 1;
+  animation: shake 0.4s ease;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0) translateY(0); }
+  20%  { transform: translateX(-3px) translateY(0); }
+  40%  { transform: translateX(3px) translateY(0); }
+  60%  { transform: translateX(-2px) translateY(0); }
+  80%  { transform: translateX(2px) translateY(0); }
+}
+
+/* ============================================================
+   Inner content
+   ============================================================ */
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 16px;
+  height: 100%;
+  width: 100%;
+  animation: contentIn 0.25s ease;
+}
+
+@keyframes contentIn {
+  from { opacity: 0; transform: scale(0.92); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+/* ---- Brand icon (diamond) ---- */
+.brandIcon {
+  width: 10px;
+  height: 10px;
+  background: linear-gradient(135deg, #9b8afb, #7c6ef0);
+  border-radius: 2.5px;
+  transform: rotate(45deg);
+  flex-shrink: 0;
+  animation: breathe 3s ease-in-out infinite;
+  box-shadow: 0 0 8px rgba(124, 110, 240, 0.4);
+}
+
+@keyframes breathe {
+  0%, 100% { opacity: 0.85; box-shadow: 0 0 8px rgba(124, 110, 240, 0.3); }
+  50%      { opacity: 1;    box-shadow: 0 0 14px rgba(124, 110, 240, 0.5); }
+}
+
+.label {
+  font: 500 13px -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
+  color: rgba(255, 255, 255, 0.5);
+  letter-spacing: 0.3px;
+  white-space: nowrap;
+}
+
+/* ---- Preview ---- */
+.checkmark {
+  flex-shrink: 0;
+  animation: bounceIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  filter: drop-shadow(0 0 4px rgba(52, 199, 89, 0.5));
+}
+
+@keyframes bounceIn {
+  from { transform: scale(0); opacity: 0; }
+  to   { transform: scale(1); opacity: 1; }
+}
+
+.previewText {
+  font: 500 12.5px -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'PingFang SC', sans-serif;
+  color: rgba(255, 255, 255, 0.72);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  animation: slideIn 0.25s ease;
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(-4px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+/* ---- Recording ---- */
+.recDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #ff3b30;
+  flex-shrink: 0;
+  animation: pulse 1.5s ease-in-out infinite;
+  box-shadow: 0 0 8px rgba(255, 59, 48, 0.6);
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; box-shadow: 0 0 8px rgba(255,59,48,0.5); }
+  50%      { opacity: 0.3; box-shadow: 0 0 4px rgba(255,59,48,0.2); }
+}
+
+.wave {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2.5px;
+  height: 100%;
+}
+
+.bar {
+  width: 3px;
+  height: 3px;
+  border-radius: 1.5px;
+  opacity: 0.3;
+  transition: height 0.06s ease-out, opacity 0.06s ease-out;
+}
+
+/* Gradient across wave bars: purple → pink */
+.bar:nth-child(1)  { background: #7c6ef0; }
+.bar:nth-child(2)  { background: #8674f2; }
+.bar:nth-child(3)  { background: #9b7af4; }
+.bar:nth-child(4)  { background: #b07ef6; }
+.bar:nth-child(5)  { background: #c482f8; }
+.bar:nth-child(6)  { background: #d486f9; }
+.bar:nth-child(7)  { background: #e08afb; }
+.bar:nth-child(8)  { background: #e88efc; }
+.bar:nth-child(9)  { background: #ee92fd; }
+.bar:nth-child(10) { background: #e040fb; }
+
+.time {
+  font: 500 11px 'SF Mono', 'Menlo', ui-monospace, monospace;
+  font-variant-numeric: tabular-nums;
+  color: rgba(255, 255, 255, 0.3);
+  flex-shrink: 0;
+}
+
+.stop {
+  -webkit-app-region: no-drag;
+  width: 26px;
+  height: 26px;
+  border-radius: 8px;
+  border: none;
+  background: rgba(255, 59, 48, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background 0.15s, transform 0.1s;
+}
+
+.stop:hover {
+  background: rgba(255, 59, 48, 0.3);
+  transform: scale(1.05);
+}
+
+.stop:active {
+  transform: scale(0.88);
+}
+
+.sq {
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+  background: #ff3b30;
+}
+
+/* ---- Processing ---- */
+.ringSpinner {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.06);
+  border-top-color: #9b8afb;
+  border-right-color: rgba(155, 138, 251, 0.3);
+  animation: spin 0.7s linear infinite;
+  flex-shrink: 0;
+  filter: drop-shadow(0 0 4px rgba(124, 110, 240, 0.4));
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.processingLabel {
+  font: 500 13px -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
+  color: rgba(255, 255, 255, 0.4);
+  letter-spacing: 0.3px;
+  white-space: nowrap;
+}
+
+/* Animated dots after "Processing" */
+.dots::after {
+  content: '';
+  animation: dots 1.5s steps(4, end) infinite;
+}
+
+@keyframes dots {
+  0%  { content: ''; }
+  25% { content: '.'; }
+  50% { content: '..'; }
+  75% { content: '...'; }
+}
+
+/* ---- Error ---- */
+.errorIcon {
+  flex-shrink: 0;
+  filter: drop-shadow(0 0 4px rgba(255, 69, 58, 0.5));
+}
+
+.err {
+  font: 500 12px -apple-system, sans-serif;
+  color: #ff6961;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

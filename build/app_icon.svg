@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 100 100" fill="none">
+  <!-- Minimalist dark macOS squircle background -->
+  <rect width="100" height="100" rx="22" fill="#161618" />
+  <!-- Elegant 5-bar voice wave -->
+  <rect x="22" y="46" width="8" height="8" rx="4" fill="#ffffff" />
+  <rect x="36" y="34" width="8" height="32" rx="4" fill="#ffffff" />
+  <rect x="50" y="22" width="8" height="56" rx="4" fill="#ffffff" />
+  <rect x="64" y="34" width="8" height="32" rx="4" fill="#ffffff" />
+  <rect x="78" y="46" width="8" height="8" rx="4" fill="#ffffff" />
+</svg>

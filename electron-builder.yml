@@ -1,0 +1,17 @@
+appId: com.voiceflow.app
+productName: VoiceFlow
+directories:
+  buildResources: build
+  output: dist
+files:
+  - out/**/*
+  - resources/**/*
+mac:
+  category: public.app-category.productivity
+  icon: build/icon.icns
+  target:
+    - dmg
+    - zip
+  entitlements: build/entitlements.mac.plist
+  extendInfo:
+    NSMicrophoneUsageDescription: "VoiceFlow needs microphone access for voice-to-text dictation"

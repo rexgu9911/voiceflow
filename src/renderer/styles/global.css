@@ -1,0 +1,46 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --color-bg: rgba(30, 30, 30, 0.85);
+  --color-bg-solid: #1e1e1e;
+  --color-surface: #2a2a2a;
+  --color-surface-hover: #333;
+  --color-text: #e0e0e0;
+  --color-text-secondary: #999;
+  --color-accent: #6c5ce7;
+  --color-accent-hover: #7c6df7;
+  --color-recording: #ff4757;
+  --color-processing: #ffa502;
+  --color-success: #2ed573;
+  --color-error: #ff4757;
+  --radius: 8px;
+  --radius-lg: 16px;
+  --radius-pill: 32px;
+  --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC',
+    'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+}
+
+body {
+  font-family: var(--font-family);
+  color: var(--color-text);
+  background: transparent;
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Settings window gets solid background */
+body.settings {
+  background: var(--color-bg-solid);
+}
+
+input,
+select,
+textarea,
+button {
+  font-family: inherit;
+  font-size: inherit;
+}
